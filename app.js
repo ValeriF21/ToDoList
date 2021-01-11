@@ -14,9 +14,9 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-console.log()
+console.log("mongodb+srv://"+ process.env.DB_ADMIN +":"+ process.env.DB_PASS +"@cluster0.d0cvh.mongodb.net/"+ process.env.DB_DATABASE +"?retryWrites=true&w=majority");
 
-mongoose.connect("mongodb+srv://"+ process.env.DB_ADMIN +":"+ process.env.DB_PASSWORD +"@cluster0.d0cvh.mongodb.net/"+ process.env.DB_DATABASE +"?retryWrites=true&w=majority", {
+mongoose.connect("mongodb+srv://"+ process.env.DB_ADMIN +":"+ process.env.DB_PASS +"@cluster0.d0cvh.mongodb.net/"+ process.env.DB_DATABASE +"?retryWrites=true&w=majority", {
 	useNewUrlParser: true,
 	useUnifiedTopology: true,
 });
@@ -43,6 +43,7 @@ let options = {
 /* GET requests */
 app.get("/", (req, res) => {
 	Item.find({}, (err, results) => {
+		console.log(results);
 		res.render("list", {
 			listTitle: today.toLocaleDateString("en-US", options),
 			newListItems: results,
